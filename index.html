@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Circular Progress bar based on SVG and JavaScript">
+    <meta name="keywords" content="HTML,CSS,SVG,JavaScript">
+    <meta name="author" content="Jessica Nierth">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Circular Progress Bar</title>
+</head>
+<body>
+<h1>Test</h1>
+<div class="circle" data-percentage="35">
+    <svg class="progress-ring"
+         preserveAspectRatio="xMinYMin meet"
+         viewBox="0 0 140 140">
+        <defs>
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#00bc9b"/>
+                <stop offset="100%" stop-color="#5eaefd"/>
+            </linearGradient>
+        </defs>
+        <text class="circle-progress-value" x="50%" y="50%" text-anchor="middle" dominant-baseline="middle">63</text>
+        <circle
+                class="progress-circle-inactive"
+                stroke="white"
+                stroke-width="4"
+                fill="transparent"
+                r="54"
+                cx="70"
+                cy="70"/>
+
+        <circle
+                class="progress-circle-active"
+                stroke="url(#gradient)"
+                fill="transparent"
+                r="54"
+                cx="70"
+                cy="70"/>
+    </svg>
+</div>
+
+<script src="circular-progress-bar.js"></script>
+</body>
+</html>
