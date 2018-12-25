@@ -1,36 +1,38 @@
 /*radius = (width / 2) - (strokeWidth * 2)*/
+/* stroke dashoffset: allows you to move the starting point of the dash-gap sequence along the path of the svg element - https://jakearchibald.com/2013/animated-line-drawing-svg/ */
+
 html,
 body {
     background-color: #000;
     color:white;
-    font-family: Arial;
+    font-family: Arial, sans-serif;
 }
 
 .circle {
     position: relative;
-    max-width: 200px;
+    max-width: 400px;
     width: 100%;
 }
 
 svg {
-    display: inline-block;
+    left: 0;
+    min-height: 150px;
     position: absolute;
     top: 0;
-    left: 0;
+    width: 100%;
 }
 
 .circle-progress-value {
-    text-align: center;
     fill: white;
+    text-align: center;
 }
 
 .progress-circle-inactive {
-    stroke: white;
-    stroke-width: 5px;
-    stroke-dasharray: 1 5;
+    stroke-width: 5;
+    stroke-dashoffset: 100;
+    stroke-dasharray: 600;
+    stroke: #ffffff;
     transition: stroke-dashoffset 0.35s;
-    transform: rotate(-90deg);
-    transform-origin: 50% 50%;
 }
 
 /* Defines the width of the dashes and the space between the dashes */
@@ -38,10 +40,7 @@ svg {
     stroke-width: 15px;
     transition: stroke-dashoffset 0.35s;
     transform: rotate(-90deg);
-    transform-origin: 50% 50%;
+    transform-origin: center center;
 }
 
-/* stroke dashoffset: allows you to move the starting point of the dash-gap sequence along the path of the svg element - https://jakearchibald.com/2013/animated-line-drawing-svg/ */
 
-/* circumference = radius * 2 * PI
-326.7256 ~= 52 * 2 * PI */

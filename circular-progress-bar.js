@@ -12,30 +12,34 @@
     // Initialize all circles
     for (var i = 0, len = circles.length; i < len; i++) {
         var circle = circles[i],
-            speed = circle.getAttribute('data-anim-speed'),
-            percent = circle.getAttribute('data-percentage'),
-            radius = circle.getAttribute('data-radius'),
-            circumference = radius * 2 * Math.PI;
-
-        var tpl = createTemplate(radius);
+            renderObject = {
+                speed: circle.getAttribute('data-anim-speed') || null,
+                percent: circle.getAttribute('data-percentage') || 0,
+                gradientStart: circle.getAttribute('data-gradient-start') || '#00bc9b',
+                gradientEnd: circle.getAttribute('data-gradient-end') || '00bc9b',
+                radius: circle.getAttribute('data-radius') || 54
+            },
+            tpl = createTemplate(renderObject);
 
         addTemplateToDom(circle, tpl);
-        for (var i = 0; i <= percent; i++) {
-            if (speed) {
-                (function (l) {
+
+        for (var k = 0; k <= renderObject.percent; k++) {
+            if (renderObject.speed) {
+                (function (index) {
                     setTimeout(function () {
-                        setProgress(circle, l, radius, circumference);
-                    }, speed * l);
-                }(i));
+                        setProgress(circle, index, renderObject);
+                    }, renderObject.speed * index);
+                }(k));
             } else {
-                setProgress(circle, i, radius, circumference);
+                setProgress(circle, k, renderObject);
             }
         }
     }
 
-    function setProgress(circle, percent, radius, circumference) {
+    function setProgress(circle, percent, renderObject) {
 
-        var offset,
+        var circumference = renderObject.radius * 2 * Math.PI,
+            offset,
             text;
 
         circle.style.strokeDasharray = circumference + " " + circumference;
@@ -44,34 +48,39 @@
         circle.style.strokeDashoffset = offset;
 
         text = circle.querySelector('.circle-progress-value');
-        text.innerHTML = percent + '%';
+
+        text.textContent = percent + '%';
     }
 
-    function createTemplate(radius) {
+    function createTemplate(renderObject) {
 
         return '<svg class="progress-ring"' +
             'preserveAspectRatio="xMinYMin meet"' +
-            'viewBox="0 0 140 140">' +
+            'viewBox="0 0 140 140"' +
+            'height="140"' +
+            'width="140">' +
             '<defs>' +
             '<linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">' +
-            '<stop offset="0%" stop-color="#00bc9b"/>' +
-            '<stop offset="100%" stop-color="#5eaefd"/>' +
+            '<stop offset="0%" stop-color="' + renderObject.gradientStart + '"/>' +
+            '<stop offset="100%" stop-color="' + renderObject.gradientEnd + '"/>' +
             '</linearGradient>' +
             '</defs>' +
-            '<text class="circle-progress-value" x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"></text>' +
+            '<text class="circle-progress-value" x="50%" y="50%" dy=".3em"' +
+            'text-anchor="middle" alignment-baseline="middle">xxx</text>' +
             '<circle class="progress-circle-inactive"' +
-            'stroke="white"' +
-            'stroke-width="4"' +
             'fill="transparent"' +
-            'r="' + radius + '"' +
+            'r="' + renderObject.radius + '"' +
             'cx="70"' +
             'cy="70"/>' +
             '<circle class="progress-circle-active"' +
+            'transform="rotate(-90,70,70)"' +
+            'transform-origin="center"' +
             'stroke="url(#gradient)"' +
             'fill="transparent"' +
-            'r="' + radius + '"' +
+            'r="' + renderObject.radius + '"' +
             'cx="70"' +
             'cy="70"/>' +
+            'Sorry, your browser does not support inline SVG.' +
             '</svg>'
     }
 
