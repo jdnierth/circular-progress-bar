@@ -13,7 +13,7 @@
     for (var i = 0, len = circles.length; i < len; i++) {
 
         var circle = circles[i],
-            renderObject = getSettingsFromDOM(),
+            renderObject = getSettingsFromDOM(i, circle),
             tpl = createTemplate(renderObject);
 
         setCircumference(renderObject);
@@ -22,17 +22,19 @@
 
         resetProgressBar(circle, renderObject);
 
-        animateCircle(renderObject);
+        animateCircle(circle, renderObject);
 
     }
 
-    function getSettingsFromDOM() {
-        return renderObject = {
+    function getSettingsFromDOM(id, circle) {
+        return {
+            id: id,
             speed: circle.getAttribute('data-anim-speed') || null,
             percent: circle.getAttribute('data-percentage') || 0,
             gradientStart: circle.getAttribute('data-gradient-start') || '#00bc9b',
             gradientEnd: circle.getAttribute('data-gradient-end') || '00bc9b',
-            radius: circle.getAttribute('data-radius') || 54
+            radius: circle.getAttribute('data-radius') || 54,
+            isNegative: (circle.getAttribute('data-percentage') < 0)
         }
     }
 
@@ -51,20 +53,19 @@
     function setProgress(circle, percent, renderObject) {
 
         var circumference = renderObject.radius * 2 * Math.PI,
-            isNegative = (renderObject.percent < 0),
             offset,
             text;
 
         circle.style.strokeDasharray = circumference + " " + circumference;
 
         offset = circumference - percent / 100 * circumference;
-        circle.style.strokeDashoffset = (isNegative) ? '-' + offset : offset;
+        circle.style.strokeDashoffset = (renderObject.isNegative) ? '-' + offset : offset;
 
         text = circle.querySelector('.circle-progress-value');
-        text.textContent = (isNegative) ? '-' + percent + '%' : percent + '%';
+        text.textContent = (renderObject.isNegative) ? '-' + percent + '%' : percent + '%';
     }
 
-    function animateCircle(renderObject) {
+    function animateCircle(circle, renderObject) {
         var percent = (renderObject.percent < 0) ? renderObject.percent * -1 : renderObject.percent;
 
         for (var k = 0; k <= percent; k++) {
@@ -99,7 +100,7 @@
             'height="140"' +
             'width="140">' +
             '<defs>' +
-            '<linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">' +
+            '<linearGradient id="gradient-' + renderObject.id + '" x1="0%" y1="0%" x2="0%" y2="100%">' +
             '<stop offset="0%" stop-color="' + renderObject.gradientStart + '"/>' +
             '<stop offset="100%" stop-color="' + renderObject.gradientEnd + '"/>' +
             '</linearGradient>' +
@@ -114,7 +115,7 @@
             '<circle class="progress-circle-active"' +
             'transform="rotate(-90,70,70)"' +
             'transform-origin="center"' +
-            'stroke="url(#gradient)"' +
+            'stroke="url(#gradient-'+ renderObject.id +')"' +
             'fill="transparent"' +
             'r="' + renderObject.radius + '"' +
             'cx="70"' +
