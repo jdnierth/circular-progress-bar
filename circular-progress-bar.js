@@ -51,20 +51,23 @@
     function setProgress(circle, percent, renderObject) {
 
         var circumference = renderObject.radius * 2 * Math.PI,
+            isNegative = (renderObject.percent < 0),
             offset,
             text;
 
         circle.style.strokeDasharray = circumference + " " + circumference;
 
         offset = circumference - percent / 100 * circumference;
-        circle.style.strokeDashoffset = offset;
+        circle.style.strokeDashoffset = (isNegative) ? '-' + offset : offset;
 
         text = circle.querySelector('.circle-progress-value');
-        text.textContent = percent + '%';
+        text.textContent = (isNegative) ? '-' + percent + '%' : percent + '%';
     }
 
     function animateCircle(renderObject) {
-        for (var k = 0; k <= renderObject.percent; k++) {
+        var percent = (renderObject.percent < 0) ? renderObject.percent * -1 : renderObject.percent;
+
+        for (var k = 0; k <= percent; k++) {
 
             if (renderObject.speed) {
                 (function (index) {
@@ -102,7 +105,7 @@
             '</linearGradient>' +
             '</defs>' +
             '<text class="circle-progress-value" x="50%" y="50%" dy=".3em"' +
-            'text-anchor="middle" alignment-baseline="middle">xxx</text>' +
+            'text-anchor="middle" alignment-baseline="middle"></text>' +
             '<circle class="progress-circle-inactive"' +
             'fill="transparent"' +
             'r="' + renderObject.radius + '"' +
