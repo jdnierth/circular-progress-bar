@@ -11,29 +11,41 @@
 
     // Initialize all circles
     for (var i = 0, len = circles.length; i < len; i++) {
+
         var circle = circles[i],
-            renderObject = {
-                speed: circle.getAttribute('data-anim-speed') || null,
-                percent: circle.getAttribute('data-percentage') || 0,
-                gradientStart: circle.getAttribute('data-gradient-start') || '#00bc9b',
-                gradientEnd: circle.getAttribute('data-gradient-end') || '00bc9b',
-                radius: circle.getAttribute('data-radius') || 54
-            },
+            renderObject = getSettingsFromDOM(),
             tpl = createTemplate(renderObject);
+
+        setCircumference(renderObject);
 
         addTemplateToDom(circle, tpl);
 
-        for (var k = 0; k <= renderObject.percent; k++) {
-            if (renderObject.speed) {
-                (function (index) {
-                    setTimeout(function () {
-                        setProgress(circle, index, renderObject);
-                    }, renderObject.speed * index);
-                }(k));
-            } else {
-                setProgress(circle, k, renderObject);
-            }
+        resetProgressBar(circle, renderObject);
+
+        animateCircle(renderObject);
+
+    }
+
+    function getSettingsFromDOM() {
+        return renderObject = {
+            speed: circle.getAttribute('data-anim-speed') || null,
+            percent: circle.getAttribute('data-percentage') || 0,
+            gradientStart: circle.getAttribute('data-gradient-start') || '#00bc9b',
+            gradientEnd: circle.getAttribute('data-gradient-end') || '00bc9b',
+            radius: circle.getAttribute('data-radius') || 54
         }
+    }
+
+    function resetProgressBar(circle, renderObject) {
+        var text,
+            circumference = getCircumference(renderObject);
+
+        // Setting active progressbar to 0 / invisible
+        circle.style.strokeDasharray = circumference + " " + circumference;
+        circle.style.strokeDashoffset = circumference;
+
+        text = circle.querySelector('.circle-progress-value');
+        text.textContent = '0%';
     }
 
     function setProgress(circle, percent, renderObject) {
@@ -48,8 +60,32 @@
         circle.style.strokeDashoffset = offset;
 
         text = circle.querySelector('.circle-progress-value');
-
         text.textContent = percent + '%';
+    }
+
+    function animateCircle(renderObject) {
+        for (var k = 0; k <= renderObject.percent; k++) {
+
+            if (renderObject.speed) {
+                (function (index) {
+                    setTimeout(function () {
+                        setProgress(circle, index, renderObject);
+                    }, renderObject.speed * index);
+                }(k));
+            } else {
+                setProgress(circle, k, renderObject);
+            }
+        }
+    }
+
+    function setCircumference(renderObject) {
+        if (!renderObject.hasOwnProperty('circumference')) {
+            renderObject.circumference = renderObject.radius * 2 * Math.PI;
+        }
+    }
+
+    function getCircumference(renderObject) {
+        return renderObject.circumference || null;
     }
 
     function createTemplate(renderObject) {
