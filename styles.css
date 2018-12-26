@@ -39,8 +39,6 @@ svg {
 .progress-circle-active {
     stroke-width: 15px;
     transition: stroke-dashoffset 0.35s;
-    transform: rotate(-90deg);
-    transform-origin: center center;
 }
 
 
