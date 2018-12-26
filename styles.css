@@ -1,6 +1,3 @@
-/*radius = (width / 2) - (strokeWidth * 2)*/
-/* stroke dashoffset: allows you to move the starting point of the dash-gap sequence along the path of the svg element - https://jakearchibald.com/2013/animated-line-drawing-svg/ */
-
 html,
 body {
     background-color: #000;
@@ -23,7 +20,6 @@ body {
     transition: stroke-dashoffset 0.35s;
 }
 
-/* Defines the width of the dashes and the space between the dashes */
 .progress-circle-active {
     stroke-width: 15px;
     transition: stroke-dashoffset 0.35s;
