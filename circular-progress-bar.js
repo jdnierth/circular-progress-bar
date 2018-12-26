@@ -93,7 +93,6 @@
     }
 
     function createTemplate(renderObject) {
-
         return '<svg class="progress-ring"' +
             'preserveAspectRatio="xMinYMin meet"' +
             'viewBox="0 0 140 140"' +
@@ -113,8 +112,8 @@
             'cx="70"' +
             'cy="70"/>' +
             '<circle class="progress-circle-active"' +
-            'transform="rotate(-90,70,70)"' +
-            'transform-origin="center"' +
+            'transform="rotate(-90 70 70)"' +
+            'transform-origin="35 35"' +
             'stroke="url(#gradient-'+ renderObject.id +')"' +
             'fill="transparent"' +
             'r="' + renderObject.radius + '"' +
