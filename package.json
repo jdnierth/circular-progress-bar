@@ -1,6 +1,6 @@
 {
   "name": "circular-progress-bar",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Circular progress bar on the basis of CSS, SVG and (cross browser compatible) vanilla JavaScript.",
   "main": "circular-progress-bar.js",
   "scripts": {
