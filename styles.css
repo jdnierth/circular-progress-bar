@@ -1,26 +1,23 @@
-html,
-body {
-    background-color: #000;
-    color:white;
-    font-family: Arial, sans-serif;
-}
-
-.circle {}
 .circle-progress-value {
     fill: white;
     text-align: center;
 }
 
+text {
+    font-size: 35px;
+}
+
 .progress-circle-inactive {
-    stroke-width: 15;
+    stroke-width: 10;
     stroke-dashoffset: 100;
     stroke-dasharray: 600;
-    stroke: #ffffff;
+    stroke: #707070;
     transition: stroke-dashoffset 0.35s;
 }
 
 .progress-circle-active {
-    stroke-width: 15px;
+    stroke-width: 10;
     transition: stroke-dashoffset 0.35s;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%; /* required for Chrome*/
 }
-
