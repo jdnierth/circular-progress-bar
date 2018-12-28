@@ -1,0 +1,26 @@
+{
+  "name": "circular-progress-bar",
+  "version": "1.0.0",
+  "description": "Circular progress bar on the basis of CSS, SVG and (cross browser compatible) vanilla JavaScript.",
+  "main": "circular-progress-bar.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jdnierth/circular-progress-bar.git"
+  },
+  "keywords": [
+    "progress",
+    "circle",
+    "svg",
+    "js",
+    "css"
+  ],
+  "author": "jnierth",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/jdnierth/circular-progress-bar/issues"
+  },
+  "homepage": "https://github.com/jdnierth/circular-progress-bar#readme"
+}
