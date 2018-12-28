@@ -6,14 +6,13 @@ body {
 }
 
 .circle {}
-
 .circle-progress-value {
     fill: white;
     text-align: center;
 }
 
 .progress-circle-inactive {
-    stroke-width: 5;
+    stroke-width: 15;
     stroke-dashoffset: 100;
     stroke-dasharray: 600;
     stroke: #ffffff;
@@ -24,5 +23,4 @@ body {
     stroke-width: 15px;
     transition: stroke-dashoffset 0.35s;
 }
-
 
